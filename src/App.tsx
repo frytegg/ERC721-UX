@@ -1,35 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// src/App.tsx
+import { Routes, Route, Navigate } from "react-router-dom";
+import { Layout } from "./components/Layout";
+import { ChainInfoPage } from "./pages/ChainInfoPage";
+import { FakeBaycPage } from "./pages/FakeBaycPage";
+import { FakeBaycTokenPage } from "./pages/FakeBaycTokenPage";
+import { FakeNefturiansPage } from "./pages/FakeNefturiansPage";
+import { FakeNefturiansUserPage } from "./pages/FakeNefturiansUserPage";
+import { FakeMeebitsPage } from "./pages/FakeMeebitsPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
+import { WrongNetworkPage } from "./pages/WrongNetworkPage";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Navigate to="/chain-info" replace />} />
+        <Route path="/chain-info" element={<ChainInfoPage />} />
+
+        <Route path="/fakeBayc" element={<FakeBaycPage />} />
+        <Route path="/fakeBayc/:tokenId" element={<FakeBaycTokenPage />} />
+
+        <Route path="/fakeNefturians" element={<FakeNefturiansPage />} />
+        <Route
+          path="/fakeNefturians/:userAddress"
+          element={<FakeNefturiansUserPage />}
+        />
+
+        <Route path="/fakeMeebits" element={<FakeMeebitsPage />} />
+
+        <Route path="*" element={<NotFoundPage />} />
+
+        <Route path="/wrong-network" element={<WrongNetworkPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+
+      </Route>
+    </Routes>
+  );
 }
 
-export default App
+export default App;
